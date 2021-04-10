@@ -3,3 +3,6 @@
 #
 # Documentation for this file format can be found in "Parameters"
 # Link: https://kedro.readthedocs.io/en/stable/04_kedro_project_setup/02_configuration.html#parameters
+
+target: species
+test_fraction: 0.3

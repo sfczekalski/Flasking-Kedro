@@ -31,6 +31,8 @@ from typing import Dict
 
 from kedro.pipeline import Pipeline
 
+from flasking_kedro.pipelines import feature_engineering
+
 
 def register_pipelines() -> Dict[str, Pipeline]:
     """Register the project's pipelines.
@@ -38,4 +40,5 @@ def register_pipelines() -> Dict[str, Pipeline]:
     Returns:
         A mapping from a pipeline name to a ``Pipeline`` object.
     """
-    return {"__default__": Pipeline([])}
+    fe_pipe = feature_engineering.create_pipeline()
+    return {"fe": fe_pipe, "__default__": Pipeline([fe_pipe])}

@@ -31,8 +31,53 @@ This is a boilerplate pipeline 'feature_engineering'
 generated using Kedro 0.17.2
 """
 
-from kedro.pipeline import Pipeline  # , node
+from kedro.pipeline import Pipeline, node
+
+from flasking_kedro.pipelines.feature_engineering.nodes import (
+    fit_normalizer,
+    normalize,
+    split_train_test,
+    split_X_y,
+)
 
 
-def create_pipeline(**kwargs):
-    return Pipeline([])
+def create_pipeline(**kwargs) -> Pipeline:
+    """Create feature engineering pipeline for training and prediction.
+
+    Returns:
+        Pipeline: Feature engineering pipeline object.
+    """
+    return Pipeline(
+        [
+            node(
+                func=split_X_y,
+                inputs=["iris", "params:target"],
+                outputs=["iris_X", "iris_y"],
+                tags=["training"],
+            ),
+            node(
+                func=split_train_test,
+                inputs=["iris_X", "iris_y", "params:test_fraction", "params:seed"],
+                outputs=["iris_X_train", "iris_X_test", "iris_y_train", "iris_y_test"],
+                tags=["training"],
+            ),
+            node(
+                func=fit_normalizer,
+                inputs="iris_X_train",
+                outputs="normalizer",
+                tags=["training"],
+            ),
+            node(
+                func=normalize,
+                inputs=["iris_X_train", "normalizer"],
+                outputs="iris_X_train_normalized",
+                tags=["training", "prediction"],
+            ),
+            node(
+                func=normalize,
+                inputs=["iris_X_test", "normalizer"],
+                outputs="iris_X_test_normalized",
+                tags=["training", "prediction"],
+            ),
+        ]
+    )
