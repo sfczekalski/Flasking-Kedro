@@ -10,3 +10,7 @@ def test_split_X_y(test_data: pd.DataFrame) -> None:
     assert isinstance(y, np.ndarray)
     assert X.shape == (4, 2)
     assert y.shape == (4,)
+
+
+def test_split_train_test(test_data: pd.DataFrame) -> None:
+    pass

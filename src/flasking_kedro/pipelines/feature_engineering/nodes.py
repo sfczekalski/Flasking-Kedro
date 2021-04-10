@@ -30,10 +30,12 @@ This is a boilerplate pipeline 'feature_engineering'
 generated using Kedro 0.17.2
 """
 import logging
-from typing import Tuple
+from typing import Tuple, Union
 
 import numpy as np
 import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import Normalizer
 
 logger = logging.getLogger(__name__)
 
@@ -46,10 +48,61 @@ def split_X_y(df: pd.DataFrame, target: str) -> Tuple[np.ndarray, np.ndarray]:
         target (str): Name of the target column.
 
     Returns:
-        Tuple[np.ndarray, np.ndarray]: Features columns and target column.
+        Tuple[np.ndarray, np.ndarray]: (dataset features, dataset targets) tuple.
     """
     y = df.pop(target).to_numpy()
     X = df.to_numpy()
 
     logger.info(f"Splitted dataset into features and {target} target.")
     return X, y
+
+
+def split_train_test(
+    X: np.ndarray, y: np.ndarray, test_fraction: float, seed: int
+) -> Union[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Split dataset into train and test samples.
+
+    Args:
+        X (np.ndarray): Dataset features.
+        y (np.ndarray): Dataset targets.
+        test_fraction (float): Fraction of examples in the test set.
+        seed (int): Random seed.
+
+    Returns:
+        Union[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+            (train features, test features, train targets, test targets).
+    """
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=test_fraction, random_state=seed
+    )
+
+    logger.info(
+        f"Splitted dataset of size {X.shape[0]} examples into \
+            {X_train.shape[0]} training examples and {X_test.shape[0]} testing examples"
+    )
+    return X_train, X_test, y_train, y_test
+
+
+def fit_normalizer(X: np.ndarray) -> Normalizer:
+    """Fit normalizer on training set.
+
+    Args:
+        X (np.ndarray): Training set.
+
+    Returns:
+        Normalizer: Fitter normalizer.
+    """
+    return Normalizer().fit(X)
+
+
+def normalize(X: np.ndarray, normalizer: Normalizer) -> np.ndarray:
+    """Normalize given dataset.
+
+    Args:
+        X (np.ndarray): Dataset to normalize.
+        normalizer (Normalizer): Fitted normalizer.
+
+    Returns:
+        np.ndarray: Normalized dataset.
+    """
+    return normalizer.transform(X)
