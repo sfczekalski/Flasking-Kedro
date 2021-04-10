@@ -71,7 +71,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                 func=normalize,
                 inputs=["iris_X_train", "normalizer"],
                 outputs="iris_X_train_normalized",
-                tags=["training", "prediction"],
+                tags=["training"],
             ),
             node(
                 func=normalize,

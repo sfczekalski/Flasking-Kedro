@@ -29,9 +29,9 @@
 """Project pipelines."""
 from typing import Dict
 
-from kedro.pipeline import Pipeline
+from kedro.pipeline import Pipeline, pipeline
 
-from flasking_kedro.pipelines import feature_engineering
+from flasking_kedro.pipelines import feature_engineering as _fe
 
 
 def register_pipelines() -> Dict[str, Pipeline]:
@@ -40,5 +40,18 @@ def register_pipelines() -> Dict[str, Pipeline]:
     Returns:
         A mapping from a pipeline name to a ``Pipeline`` object.
     """
-    fe_pipe = feature_engineering.create_pipeline()
-    return {"fe": fe_pipe, "__default__": Pipeline([fe_pipe])}
+    feature_engineering_train_pipe = _fe.create_pipeline().only_nodes_with_tags(
+        "training"
+    )
+    feature_engineering_predict_pipe = pipeline(
+        _fe.create_pipeline().only_nodes_with_tags("prediction"),
+        inputs={"iris_X_test": "iris_X_test", "normalizer": "normalizer"},
+        namespace="predict",
+    )
+    return {
+        "fe_train": feature_engineering_train_pipe,
+        "fe_predict": feature_engineering_predict_pipe,
+        "__default__": Pipeline(
+            [feature_engineering_train_pipe, feature_engineering_predict_pipe]
+        ),
+    }
