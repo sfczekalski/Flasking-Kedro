@@ -50,6 +50,9 @@ out/
 /.emacs.desktop.lock
 *.elc
 
+# VS Code
+.vscode
+
 # JIRA plugin
 atlassian-ide-plugin.xml
 

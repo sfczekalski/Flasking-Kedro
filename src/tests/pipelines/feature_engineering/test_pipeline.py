@@ -34,3 +34,39 @@ Kedro recommends using `pytest` framework, more info about it can be found
 in the official documentation:
 https://docs.pytest.org/en/latest/getting-started.html
 """
+from kedro.io import DataCatalog
+from kedro.runner import SequentialRunner
+
+from flasking_kedro.pipelines.feature_engineering import create_pipeline
+
+
+def test_feature_engineering_pipeline(
+    sample_data_catalog_train: DataCatalog, runner: SequentialRunner
+):
+    train_pipeline = create_pipeline(
+        output_X_train_normalized="sample_iris_X_train_normalized",
+        output_X_test_normalized="sample_iris_X_test_normalized",
+        output_y_train="sample_iris_y_train",
+        output_y_test="sample_iris_y_test",
+        normalizer="sample_normalizer",
+    )
+
+    output = runner.run(pipeline=train_pipeline, catalog=sample_data_catalog_train)
+
+    assert output["sample_iris_X_train_normalized"].shape == (3, 4)
+    assert output["sample_iris_X_test_normalized"].shape == (1, 4)
+    assert output["sample_iris_y_train"].shape == (3,)
+    assert output["sample_iris_y_test"].shape == (1,)
+
+    # TODO test for reusing the pipeline for inference
+    """
+    predict_pipeline = pipeline(
+        train_pipeline.only_nodes_with_tags("prediction"),
+        inputs={
+            "sample_iris_X_test": "sample_iris_X_test",
+            "sample_iris_X_test_normalized": "sample_iris_X_test_normalized",
+            "sample_normalizer": "sample_normalizer",
+        },
+        namespace="predict",
+    )
+    """

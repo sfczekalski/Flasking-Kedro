@@ -41,8 +41,21 @@ from flasking_kedro.pipelines.feature_engineering.nodes import (
 )
 
 
-def create_pipeline(**kwargs) -> Pipeline:
+def create_pipeline(
+    input_dataset: str = "iris",
+    output_X_train_normalized: str = "iris_X_train_normalized",
+    output_X_test_normalized: str = "iris_X_test_normalized",
+    output_X_train: str = "iris_X_train",
+    output_X_test: str = "iris_X_test",
+    output_y_train: str = "iris_y_train",
+    output_y_test: str = "iris_y_test",
+    normalizer: str = "normalizer",
+    **kwargs
+) -> Pipeline:
     """Create feature engineering pipeline for training and prediction.
+
+    Args:
+        # TODO
 
     Returns:
         Pipeline: Feature engineering pipeline object.
@@ -58,25 +71,25 @@ def create_pipeline(**kwargs) -> Pipeline:
             node(
                 func=split_train_test,
                 inputs=["iris_X", "iris_y", "params:test_fraction", "params:seed"],
-                outputs=["iris_X_train", "iris_X_test", "iris_y_train", "iris_y_test"],
+                outputs=[output_X_train, output_X_test, output_y_train, output_y_test],
                 tags=["training"],
             ),
             node(
                 func=fit_normalizer,
-                inputs="iris_X_train",
-                outputs="normalizer",
+                inputs=output_X_train,
+                outputs=normalizer,
                 tags=["training"],
             ),
             node(
                 func=normalize,
-                inputs=["iris_X_train", "normalizer"],
-                outputs="iris_X_train_normalized",
+                inputs=[output_X_train, normalizer],
+                outputs=output_X_train_normalized,
                 tags=["training"],
             ),
             node(
                 func=normalize,
-                inputs=["iris_X_test", "normalizer"],
-                outputs="iris_X_test_normalized",
+                inputs=[output_X_test, normalizer],
+                outputs=output_X_test_normalized,
                 tags=["training", "prediction"],
             ),
         ]
