@@ -46,12 +46,11 @@ def register_pipelines() -> Dict[str, Pipeline]:
     feature_engineering_predict_pipe = pipeline(
         _fe.create_pipeline().only_nodes_with_tags("prediction"),
         inputs={"iris_X_test": "iris_X_test", "normalizer": "normalizer"},
+        outputs={"iris_X_test_normalized": "iris_X_test_normalized"},
         namespace="predict",
     )
     return {
+        "__default__": Pipeline([]),
         "fe_train": feature_engineering_train_pipe,
         "fe_predict": feature_engineering_predict_pipe,
-        "__default__": Pipeline(
-            [feature_engineering_train_pipe, feature_engineering_predict_pipe]
-        ),
     }

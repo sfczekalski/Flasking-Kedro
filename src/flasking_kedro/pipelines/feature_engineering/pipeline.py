@@ -64,7 +64,7 @@ def create_pipeline(
         [
             node(
                 func=split_X_y,
-                inputs=["iris", "params:target"],
+                inputs=[input_dataset, "params:target"],
                 outputs=["iris_X", "iris_y"],
                 tags=["training"],
             ),

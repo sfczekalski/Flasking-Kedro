@@ -58,15 +58,14 @@ def test_feature_engineering_pipeline(
     assert output["sample_iris_y_train"].shape == (3,)
     assert output["sample_iris_y_test"].shape == (1,)
 
-    # TODO test for reusing the pipeline for inference
-    """
-    predict_pipeline = pipeline(
-        train_pipeline.only_nodes_with_tags("prediction"),
-        inputs={
-            "sample_iris_X_test": "sample_iris_X_test",
-            "sample_iris_X_test_normalized": "sample_iris_X_test_normalized",
-            "sample_normalizer": "sample_normalizer",
-        },
-        namespace="predict",
-    )
-    """
+    # predict_pipeline = pipeline(
+    #     create_pipeline(
+    #         output_X_test_normalized="sample_iris_X_test_normalized",
+    #         normalizer="sample_normalizer",
+    #     ).only_nodes_with_tags("prediction"),
+    #     inputs={
+    #         "sample_iris_X_test_normalized": "sample_iris_X_test_normalized",
+    #         "sample_normalizer": "sample_normalizer",
+    #     },
+    #     namespace="predict",
+    # )

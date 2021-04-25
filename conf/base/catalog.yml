@@ -3,6 +3,52 @@
 # Documentation for this file format can be found in "The Data Catalog"
 # Link: https://kedro.readthedocs.io/en/stable/05_data/01_data_catalog.html
 
-iris:
-  filepath: data/01_raw/iris.csv
+_csv: &csv
   type: pandas.CSVDataSet
+
+_pickle: &pickle
+  type: kedro.extras.datasets.pickle.pickle_dataset.PickleDataSet
+
+iris:
+  <<: *csv
+  filepath: data/01_raw/iris.csv
+
+iris_X:
+  <<: *pickle
+  filepath: data/02_intermediate/iris_X.pickle
+
+iris_y:
+  <<: *pickle
+  filepath: data/02_intermediate/iris_y.pickle
+
+iris_X_train:
+  <<: *pickle
+  filepath: data/02_intermediate/iris_X_train.pickle
+
+iris_X_test:
+  <<: *pickle
+  filepath: data/02_intermediate/iris_X_test.pickle
+
+iris_X_train_normalized:
+  <<: *pickle
+  filepath: data/05_model_input/iris_X_train_normalized.pickle
+
+iris_X_test_normalized:
+  <<: *pickle
+  filepath: data/05_model_input/iris_X_test_normalized.pickle
+
+iris_y_train:
+  <<: *pickle
+  filepath: data/05_model_input/iris_y_train.pickle
+
+iris_y_test:
+  <<: *pickle
+  filepath: data/05_model_input/iris_y_test.pickle
+
+normalizer:
+  <<: *pickle
+  filepath: data/06_models/normalizer.pickle
+
+logistic_regression:
+  <<: *pickle
+  filepath: data/06_models/logistic_regression.pickle
