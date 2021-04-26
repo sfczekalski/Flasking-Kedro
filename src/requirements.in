@@ -12,3 +12,9 @@ pytest-mock>=1.7.1, <2.0
 pytest~=6.1.2
 wheel==0.32.2
 pre-commit
+kedro[pandas.CSVDataSet]
+pandas
+scikit-learn
+
+flask
+flask-restful

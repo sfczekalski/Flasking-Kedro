@@ -25,31 +25,9 @@
 #
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """
-This module contains an example test.
-
-Tests should be placed in ``src/tests``, in modules that mirror your
-project's structure, and in files named test_*.py. They are simply functions
-named ``test_*`` which test a unit of logic.
-
-To run the tests, run ``kedro test`` from the project root directory.
+This is a boilerplate pipeline 'modelling'
+generated using Kedro 0.17.2
 """
 
-from pathlib import Path
-
-import pytest
-from kedro.framework.context import KedroContext
-
-
-@pytest.fixture
-def project_context():
-    return KedroContext(package_name="flasking_kedro", project_path=Path.cwd())
-
-
-# The tests below are here for the demonstration purpose
-# and should be replaced with the ones testing the project
-# functionality
-class TestProjectContext:
-    def test_package_name(self, project_context):
-        assert project_context.package_name == "flasking_kedro"
+from .pipeline import create_pipeline  # NOQA

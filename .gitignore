@@ -9,8 +9,8 @@ conf/local/**
 conf/**/*credentials*
 
 # ignore everything in the following folders
-data/**
-logs/**
+data
+logs
 
 # except their sub-folders
 !data/**/
@@ -49,6 +49,9 @@ out/
 /.emacs.desktop
 /.emacs.desktop.lock
 *.elc
+
+# VS Code
+.vscode
 
 # JIRA plugin
 atlassian-ide-plugin.xml
