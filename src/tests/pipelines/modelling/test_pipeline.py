@@ -25,36 +25,12 @@
 #
 # See the License for the specific language governing permissions and
 # limitations under the License.
+"""
+This is a boilerplate test file for pipeline 'modelling'
+generated using Kedro 0.17.2.
+Please add your pipeline tests here.
 
-"""Project pipelines."""
-from typing import Dict
-
-from kedro.pipeline import Pipeline, pipeline
-
-from flasking_kedro.pipelines import feature_engineering as _fe
-from flasking_kedro.pipelines import modelling as _modelling
-
-
-def register_pipelines() -> Dict[str, Pipeline]:
-    """Register the project's pipelines.
-
-    Returns:
-        A mapping from a pipeline name to a ``Pipeline`` object.
-    """
-    feature_engineering_train_pipe = _fe.create_pipeline().only_nodes_with_tags(
-        "training"
-    )
-    feature_engineering_predict_pipe = pipeline(
-        _fe.create_pipeline().only_nodes_with_tags("prediction"),
-        inputs={"iris_X_test": "iris_X_test", "normalizer": "normalizer"},
-        outputs={"iris_X_test_normalized": "iris_X_test_normalized"},
-        namespace="predict",
-    )
-
-    modelling_train_pipe = _modelling.create_pipeline().only_nodes_with_tags("training")
-    return {
-        "__default__": Pipeline([]),
-        "fe_train": feature_engineering_train_pipe,
-        "fe_predict": feature_engineering_predict_pipe,
-        "model_train": modelling_train_pipe,
-    }
+Kedro recommends using `pytest` framework, more info about it can be found
+in the official documentation:
+https://docs.pytest.org/en/latest/getting-started.html
+"""

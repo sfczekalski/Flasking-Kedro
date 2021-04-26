@@ -52,3 +52,11 @@ normalizer:
 logistic_regression:
   <<: *pickle
   filepath: data/06_models/logistic_regression.pickle
+
+iris_y_train_pred:
+  <<: *pickle
+  filepath: data/07_model_output/iris_y_train_pred.pickle
+
+iris_y_test_pred:
+  <<: *pickle
+  filepath: data/07_model_output/iris_y_test_pred.pickle
