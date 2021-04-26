@@ -90,7 +90,7 @@ def create_pipeline(
                 func=normalize,
                 inputs=[output_X_test, normalizer],
                 outputs=output_X_test_normalized,
-                tags=["training", "prediction"],
+                tags=["training", "inference"],
             ),
         ]
     )

@@ -15,3 +15,6 @@ pre-commit
 kedro[pandas.CSVDataSet]
 pandas
 scikit-learn
+
+flask
+flask-restful

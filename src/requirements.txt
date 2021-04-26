@@ -4,6 +4,8 @@
 #
 #    pip-compile /Users/czekalss/Projects/learning/Flasking-Kedro/src/requirements.in
 #
+aniso8601==9.0.1
+    # via flask-restful
 anyconfig==0.10.0
     # via kedro
 appdirs==1.4.4
@@ -49,6 +51,7 @@ click==7.1.2
     # via
     #   black
     #   cookiecutter
+    #   flask
     #   kedro
     #   pip-tools
 cookiecutter==1.7.2
@@ -69,6 +72,12 @@ filelock==3.0.12
     # via virtualenv
 flake8==3.9.0
     # via -r /Users/czekalss/Projects/learning/Flasking-Kedro/src/requirements.in
+flask-restful==0.3.8
+    # via -r /Users/czekalss/Projects/learning/Flasking-Kedro/src/requirements.in
+flask==1.1.2
+    # via
+    #   -r /Users/czekalss/Projects/learning/Flasking-Kedro/src/requirements.in
+    #   flask-restful
 fsspec==0.8.7
     # via kedro
 gitdb==4.0.7
@@ -105,6 +114,8 @@ ipywidgets==7.6.3
     # via jupyter
 isort==4.3.21
     # via -r /Users/czekalss/Projects/learning/Flasking-Kedro/src/requirements.in
+itsdangerous==1.1.0
+    # via flask
 jedi==0.18.0
     # via ipython
 jinja2-time==0.2.0
@@ -112,6 +123,7 @@ jinja2-time==0.2.0
 jinja2==2.11.3
     # via
     #   cookiecutter
+    #   flask
     #   jinja2-time
     #   nbconvert
     #   notebook
@@ -267,7 +279,9 @@ python-json-logger==0.1.11
 python-slugify==4.0.1
     # via cookiecutter
 pytz==2021.1
-    # via pandas
+    # via
+    #   flask-restful
+    #   pandas
 pyyaml==5.4.1
     # via
     #   kedro
@@ -296,6 +310,7 @@ six==1.15.0
     #   argon2-cffi
     #   bleach
     #   cookiecutter
+    #   flask-restful
     #   jsonschema
     #   python-dateutil
     #   virtualenv
@@ -345,6 +360,8 @@ wcwidth==0.2.5
     # via prompt-toolkit
 webencodings==0.5.1
     # via bleach
+werkzeug==1.0.1
+    # via flask
 wheel==0.32.2
     # via -r /Users/czekalss/Projects/learning/Flasking-Kedro/src/requirements.in
 widgetsnbextension==3.5.1
